@@ -1,0 +1,165 @@
+package com.lab.prog1.lab_prg1;
+
+public class Customer {
+	String name,address;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public Ticket getTicket() {
+		return ticket;
+	}
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
+	}
+	Ticket ticket;
+	@Override
+	public String toString() {
+		return "Customer [name=" + name + ", address=" + address + ", ticket=" + ticket + "]";
+	}
+	
+
+}
+
+
+package com.lab.prog1.lab_prg1;
+
+import java.util.Scanner;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+
+
+@SpringBootApplication
+public class LabPrg1Application {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		SpringApplication.run(LabPrg1Application.class, args);
+		ApplicationContext ac = new ClassPathXmlApplicationContext("custtick.xml");
+		Customer cs = (Customer) ac.getBean("customer");
+		Ticket t = (Ticket) cs.getTicket();
+		
+		while(true) {
+		
+		
+		System.out.println("1. insert the details\n 2. Display details\n 3. exit");
+		System.out.println("enter the choice");
+		int a = sc.nextInt();
+		switch(a) {
+			case 1:
+				System.out.println("enter the customer name");
+				cs.setName(sc.next());
+				System.out.println("enter the customer address");
+				cs.setAddress(sc.next());
+				System.out.println("enter the ticket number");
+				t.setTicno(sc.nextInt());
+				System.out.println("enter the ticket seat number");
+				t.setSeatno(sc.nextInt());
+				System.out.println("enter the ticket price");
+				t.setPrice(sc.nextInt());
+				System.out.println("enter the ticket type - economic/gold/platinum");
+				t.setTicktype(sc.next());
+				cs.setTicket(t);
+				System.out.println("thanks for input");
+				break;
+				
+			case 2:
+				System.out.println("customer details");
+				System.out.println("Name:"+cs.getName()+" "+" Address:"+cs.getAddress());
+				System.out.println("ticket details");
+				t = cs.getTicket();
+				System.out.println("Ticket No: "+t.getTicno());
+				System.out.println("ticket type: "+t.getTicktype());
+				System.out.println("Ticket seat no: "+t.getSeatno());
+				System.out.println("ticket price: "+t.getPrice());
+				break;
+				
+			case 3:
+				System.exit(0);
+				
+			
+		
+		
+		
+		}
+		}
+		
+		
+		
+		
+		
+		
+	}
+
+}
+
+
+
+package com.lab.prog1.lab_prg1;
+
+public class Ticket {
+	
+	int ticno,price,seatno;
+	@Override
+	public String toString() {
+		return "Ticket [ticno=" + ticno + ", price=" + price + ", seatno=" + seatno + ", ticktype=" + ticktype + "]";
+	}
+	public int getTicno() {
+		return ticno;
+	}
+	public void setTicno(int ticno) {
+		this.ticno = ticno;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public int getSeatno() {
+		return seatno;
+	}
+	public void setSeatno(int seatno) {
+		this.seatno = seatno;
+	}
+	public String getTicktype() {
+		return ticktype;
+	}
+	public void setTicktype(String ticktype) {
+		this.ticktype = ticktype;
+	}
+	String ticktype;
+	
+
+}
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="customer" class="com.lab.prog1.lab_prg1.Customer"
+		scope="prototype">
+		<property name="ticket" ref="tick" />
+	</bean>
+
+	<bean id="tick" class="com.lab.prog1.lab_prg1.Ticket"
+		scope="prototype">
+
+	</bean>
+
+</beans>
