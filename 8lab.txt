@@ -1,3 +1,15 @@
 FROM eclipse-temurin:17-jdk-alpine
 COPY target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
+
+
+
+9
+
+
+docker pull mysql:latest
+docker build -t prg7/jcompose .
+docker images
+docker-compose up
+docker start -i prg_app_1
+docker exec -it prg7_app_1/bin/sh
