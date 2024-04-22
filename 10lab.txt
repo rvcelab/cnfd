@@ -36,3 +36,13 @@ spec:
   ports:
   - port: 8080
     targetPort: 8080
+
+
+
+minikube start
+minikube status
+eval $(minikube docker-env)
+docker build -t prg3/ .
+kubectl apply -f kuber.yml
+minikube service myapp-service
+
